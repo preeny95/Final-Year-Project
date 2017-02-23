@@ -23,7 +23,7 @@ class Analysis(ttk.Frame):
             import sqlite3
             import pandas as pd
 
-            conn = sqlite3.connect('viber_messages2')
+            conn = sqlite3.connect(self.vfilename)
 
             cur = conn.cursor()
             #Adapted from Stackoverflow.com by Parfait
@@ -67,7 +67,6 @@ class Analysis(ttk.Frame):
         self.menubar = tkinter.Menu(self.root)
         self.menu_file = tkinter.Menu(self.menubar)
         self.menu_file.add_command(label='Exit', command=self.on_quit)
-        self.menu_edit = tkinter.Menu(self.menubar)
         self.menubar.add_cascade(menu=self.menu_file, label='File')
         self.root.config(menu=self.menubar)
 #--------------------------------------------------------------------------------------------------------------------------------------------------
