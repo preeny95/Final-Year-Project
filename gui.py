@@ -32,7 +32,7 @@ class Analysis(ttk.Frame):
                                 INNER JOIN participants_info  ON messages.participant_id = participants_info._id
                                 WHERE messages.conversation_id IS NOT NULL;""")
 
-            query = ("""SELECT messages.date, participants_info.number, participants_info.contact_name, messages.body AS Message_Sent, messages.conversation_id, messages.participant_id
+            query = ("""SELECT strftime('%Y-%m-%d %H:%M:%S',messages.date/1000,'unixepoch'), participants_info.number, participants_info.contact_name, messages.body AS Message_Sent, messages.conversation_id, messages.participant_id
                         FROM messages
                         INNER JOIN
                         participants ON messages.participant_id = participants._id
