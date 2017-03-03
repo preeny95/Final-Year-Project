@@ -105,13 +105,12 @@ class Analysis(ttk.Frame):
         self.wordopp = askopenfilename()
 
 
-
 #----------------------------------------------------------------Chat Logs-----------------------------------------------------------------------
 #Insert a users chatlog
 
     def clopen(self):
-        from tkinter.filedialog import askopenfilename
-        self.chatlog = askopenfilename()
+        from tkinter.filedialog import askdirectory
+        self.wordopp = askdirectory(title="Select chat log directory", filetypes="Text Files", "*.txt")
 
     def chatanal(self):
         import os
