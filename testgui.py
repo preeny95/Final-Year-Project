@@ -102,15 +102,52 @@ class Analysis(ttk.Frame):
 
     def wordop(self):
         from tkinter.filedialog import askopenfilename
-        self.wordopp = askopenfilename()
+        self.wordop = askopenfilename()
 
 
 #----------------------------------------------------------------Chat Logs-----------------------------------------------------------------------
 #Insert a users chatlog
-
+#http://stackoverflow.com/questions/3964681/find-all-files-in-directory-with-extension-txt-in-python
     def clopen(self):
+        import os
         from tkinter.filedialog import askdirectory
-        self.wordopp = askdirectory(title="Select chat log directory", filetypes="Text Files", "*.txt")
+        self.wordopp = askdirectory(title="Select chat log directory")
+        for subdir, dirs, files in os.walk(self.wordopp):
+            for file in files:
+                filepath = subdir + os.sep + file
+                if filepath.endswith(".txt"):
+                    wordlist = self.wordop
+                    f = open(wordlist)
+                    l = set(w.strip().lower() for w in f)
+                    ff = open(filepath)
+                    with open(filepath, 'r') as c:
+                        c.read()
+                        print(c)
+                        found = False
+                        file = open('out.txt', 'w')
+                        for line in c:
+                            line = line.lower()
+                            if any(f in line for w in c):
+                                found = True
+                                file.write(line)
+                        if not found:
+                            print ()
+                            print("not here")
+#wordlist = input("What is your word list called?")
+#f = open(wordlist)
+#l = set(w.strip().lower() for w in f)
+#chatlog = input("What is your chat log called?")
+#with open(chatlog) as f:
+#    found = False
+#    for line in f:
+#        line = line.lower()
+#        if any(w in line for w in l):
+#            print (l)
+#            print(line)
+#            found = True
+#    if not found:
+#        print("not here")
+
 
     def chatanal(self):
         import os
@@ -121,7 +158,7 @@ class Analysis(ttk.Frame):
         f = open(wordlist)
         l = set(w.strip().lower() for w in f)
         chatlog = self.chatlog
-        with open(chatlog) as f:
+        with open(files) as f:
             found = False
             file = open("out.txt", "w")
             for line in f:

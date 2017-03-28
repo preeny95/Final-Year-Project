@@ -1,0 +1,22 @@
+   strftime('%Y-%m-%d %H:%M:%S',messages.date/1000,'unixepoch')         number contact_name                                       Message_Sent  conversation_id  participant_id
+0                                 2017-02-11 23:52:25            +447940329872         None                                       Hello Daniel                2               3
+1                                 2017-02-11 23:52:55            +447940329872         None                                      outgoing_call                2               3
+2                                 2017-02-11 23:53:17            +447568435918       Daniel                                              Hello                2               4
+3                                 2017-02-11 23:53:41            +447940329872         None                                                Erm                2               3
+4                                 2017-02-11 23:53:52            +447940329872         None                    I don't know what to put hahaha                2               3
+5                                 2017-02-11 23:53:59            +447940329872         None                              Double text me please                2               3
+6                                 2017-02-11 23:54:30            +447568435918       Daniel  Same. I think its best to mention a variety of...                2               4
+7                                 2017-02-11 23:54:38            +447568435918       Daniel                                  For test purposes                2               4
+8                                 2017-02-11 23:54:39            +447940329872         None                                       That's trueb                2               3
+9                                 2017-02-11 23:54:50            +447940329872         None                        Some crude words too please                2               3
+10                                2017-02-11 23:54:55            +447940329872         None                            Would you like to meet?                2               3
+11                                2017-02-11 23:55:22            +447568435918       Daniel                     I dont know if i'll be allowed                2               4
+12                                2017-02-11 23:55:34            +447940329872         None                                             Please                2               3
+13                                2017-02-11 23:55:44            +447568435918       Daniel                                           What for                2               4
+14                                2017-02-11 23:55:50            +447940329872         None                                         You'll see                2               3
+15                                2017-02-11 23:56:07            +447568435918       Daniel                           I dont even know you tho                2               4
+16                                2017-02-11 23:56:43            +447940329872         None                    Okay this is weird now... hahah                2               3
+17                                2017-02-11 23:56:55            +447568435918       Daniel                                       I know right                2               4
+18                                2017-02-11 23:56:59            +447940329872         None         Should be everything I need, cheers mate!!                2               3
+19                                2017-02-11 23:57:07            +447568435918       Daniel                                         No worries                2               4
+
