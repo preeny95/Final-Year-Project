@@ -109,35 +109,30 @@ class Analysis(ttk.Frame):
 #----------------------------------------------------------------Chat Logs-----------------------------------------------------------------------
 #Insert a users chatlog
 
-def clopen(self):
-    import os
-    from tkinter.filedialog import askdirectory
-    self.wordopp = askdirectory(title="Select chat log directory")
-    for root,dirs,files in os.walk(self.wordopp):
-        for file in files:
-            if file.endswith(".txt"):
-                with open(file, 'r') as f:
-                    content = f.read()
+    def clopen(self):
+        from tkinter.filedialog import askopenfilename
+        self.chatlog = askopenfilename()
 
-def chatanal(self):
-    import os
-    import io
-    import re
-    import sys
-    wordlist = self.wordopp
-    f = open(wordlist)
-    l = set(w.strip().lower() for w in f)
-    chatlog = self.chatlog
-    with open(files) as f:
-        found = False
-        file = open("out.txt", "w")
-        for line in f:
-            line = line.lower()
-            if any(w in line for w in l):
-                found = True
-                file.write(line)
-        if not found:
-            print("not here")
+    def chatanal(self):
+        import os
+        import io
+        import re
+        import sys
+        wordlist = self.wordopp
+        f = open(wordlist)
+        l = set(w.strip().lower() for w in f)
+        chatlog = self.chatlog
+        with open(chatlog) as f:
+            found = False
+            file = open("out.txt", "w")
+            for line in f:
+                line = line.lower()
+                if any(w in line for w in l):
+                    found = True
+                    file.write(line)
+            if not found:
+                print("not here")
+
 
 
 #----------------------------------------------------------------GUI Grid and Buttons-----------------------------------------------------------------------

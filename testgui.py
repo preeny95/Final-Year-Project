@@ -110,29 +110,33 @@ class Analysis(ttk.Frame):
 #http://stackoverflow.com/questions/3964681/find-all-files-in-directory-with-extension-txt-in-python
     def clopen(self):
         import os
+        import io
+        import re
+        import sys
         from tkinter.filedialog import askdirectory
         self.wordopp = askdirectory(title="Select chat log directory")
-        for subdir, dirs, files in os.walk(self.wordopp):
-            for file in files:
-                filepath = subdir + os.sep + file
-                if filepath.endswith(".txt"):
-                    wordlist = self.wordop
-                    f = open(wordlist)
-                    l = set(w.strip().lower() for w in f)
-                    ff = open(filepath)
-                    with open(filepath, 'r') as c:
-                        c.read()
-                        print(c)
-                        found = False
-                        file = open('out.txt', 'w')
-                        for line in c:
-                            line = line.lower()
-                            if any(f in line for w in c):
-                                found = True
-                                file.write(line)
+        path = self.wordopp
+        files = os.listdir(path)
+        paths = []
+        wordlist = self.wordop
+        word = open(wordlist)
+        l = set(w.strip().lower() for w in word)
+        inchat = []
+        for file in files:
+            paths.append(os.path.join(path, file))
+            with open(paths[-1]) as f:
+                found = False
+                file = open("out.txt", "a")
+                for line in f:
+                    line = line.lower()
+                    if any(w in line for w in l):
+                        found = True
+                        print (line)
+                        file.write(line)
                         if not found:
-                            print ()
                             print("not here")
+
+
 #wordlist = input("What is your word list called?")
 #f = open(wordlist)
 #l = set(w.strip().lower() for w in f)
