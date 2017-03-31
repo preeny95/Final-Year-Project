@@ -43,7 +43,7 @@ class Analysis(ttk.Frame):
                         ORDER BY messages.date;""")
 
             for convo in cur.fetchall():
-                with open('{}.html'.format(convo), 'w') as h, open('{}.txt'.format(convo), 'w') as t:
+                with open('Chat {}.html'.format(convo), 'w') as h, open('Chat {}.txt'.format(convo), 'w') as t:
                     df = pd.read_sql_query(query, conn, params=convo)
 
                     # HTML WRITE
