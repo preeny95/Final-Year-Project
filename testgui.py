@@ -2,6 +2,29 @@ import tkinter
 from tkinter import ttk
 from tkinter import *
 import tkinter.filedialog as filedialog
+from datetime import datetime
+import os
+import logging
+
+if not os.path.exists("Logs"):
+                 os.makedirs("Logs")
+
+if not os.path.exists("TextLogs"):
+                os.makedirs("TextLogs")
+
+if not os.path.exists("HTMLLogs"):
+                os.makedirs("HTMLLogs")
+
+if not os.path.exists("CSVLogs"):
+                os.makedirs("CSVLogs")
+
+
+
+
+logname = "Logs/{}.txt".format(datetime.now().strftime("%d-%m-%Y %H.%M.%S"))
+logging.basicConfig(filename=logname,level=logging.DEBUG,format='%(asctime)s %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
+
+# Function for date file name from: http://stackoverflow.com/questions/31886584/how-can-i-generate-a-file-in-python-with-todays-date
 
 class Analysis(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -10,7 +33,9 @@ class Analysis(ttk.Frame):
         self.init_gui()
         parent.minsize(width=965, height=500)
         parent.maxsize(width=965, height=500)
-#-----------------------------------------------------------------------Exit Button----------------------------------------------------------------
+
+
+#-------------------------------------Exit Button----------------------------------------------------------------
 #Function for the exit button
     def on_quit(self):
         quit()
@@ -20,9 +45,7 @@ class Analysis(ttk.Frame):
     def viber(self):
         from tkinter.filedialog import askopenfilename
         self.vfilename = askopenfilename()
-
     def viber_db(self):
-        if self.vfilename:
             import sqlite3
             import pandas as pd
 
@@ -42,10 +65,8 @@ class Analysis(ttk.Frame):
                         WHERE messages.conversation_id = ?
                         ORDER BY messages.date;""")
 
-                        
-
             for convo in cur.fetchall():
-                with open('Conversation{}.html'.format(convo), 'w') as h, open('Conversation{}.txt'.format(convo), 'w') as t, open('Conversation{}.csv'.format(convo), 'w') as c:
+                with open('HTMLLogs/Conversation{}.html'.format(convo), 'w') as h, open('TextLogs/Conversation{}.txt'.format(convo), 'w') as t, open('CSVLogs/Conversation{}.csv'.format(convo), 'w') as c:
                     df = pd.read_sql_query(query, conn, params=convo)
 
                     # HTML WRITE
@@ -58,9 +79,13 @@ class Analysis(ttk.Frame):
 
                     # CSV WRITE
                     c.write(df.to_csv())
-
+                    #logger.write ("test")
             cur.close()
             conn.close()
+
+            logging.info("The file you have analysed is located at " + self.vfilename)
+            logging.info("There are {} conversations found".format(convo))
+
 
 #------------------------------------------------------------------Text Editor---------------------------------------------------------------------
 #Tutorial followed at http://knowpapa.com/text-editor/
@@ -108,7 +133,7 @@ class Analysis(ttk.Frame):
     def wordop(self):
         from tkinter.filedialog import askopenfilename
         self.wordopen = askopenfilename(title="Please selet your chat log", filetypes=[("Text files","*.txt"), ("All Files","*.*")])
-
+        logging.info("The word list located at: " + self.wordopen + " has been loaded")
 
 #----------------------------------------------------------------Chat Logs-----------------------------------------------------------------------
 #Insert a users chatlog
@@ -118,7 +143,7 @@ class Analysis(ttk.Frame):
     def clopen(self):
         from tkinter.filedialog import askdirectory
         self.chatopen = askdirectory(title="Select chat log directory")
-
+        logging.info("The directory " + self.chatopen + " has been loaded")
     def chatanal(self):
         out = filedialog.asksaveasfile(mode='w', defaultextension=".txt", filetypes=[("Text files","*.txt"), ("All Files","*.*")])
         import fnmatch
@@ -168,7 +193,7 @@ class Analysis(ttk.Frame):
 
         #Instructions
         frame = Frame(self, borderwidth=1, relief="solid")
-        frame.pack(side=TOP)
+        frame.pack(side=TOP, expand=TRUE)
         labeltext = StringVar()
         #labeltext.set("")
         labeltext.set("This is a python program to enable a user to analyse a Viber database and run language analysis on the chats within. \n\nCreated by Nathan Preen for my Final Year Project at Leeds Beckett University. \n\nThe buttons below are as followed.\n\n Insert Viber Database: This will open a file dialog for the user to select the viber database.\n\n Viber Database Analyse:  This will run the analysis script and output the viber chats into the root folder of the script. The chat logs will be named automatically based on the conversation id's from the database. The user will also be given a HTML and Text format. \n\n Create Word List: This will open an inbuilt text editor to allow the user to create their own words list. This will not automatically direct the program to the word list, the user must set the word list using the insert words list button. Please note to be able to understand the analysis results your first word must be 'Time'  \n\n Insert Words List: This button will allow the user to insert their precreated word list (These must be in .txt format) Please note to be able to understand the analysis results your first word must be 'Time'. \n\n Insert Chat Logs: This button will ask the user to point the program to the directory where all of the chat logs are stored.\n\n Analyse Chat log: This button will run the analysis based on the files passed to the program by the user. The user MUST have inserted a word list and chat log directory to work.")
