@@ -32,14 +32,9 @@ class Analysis(ttk.Frame):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
         self.root = parent
         self.init_gui()
-        parent.minsize(width=965, height=500)
-        parent.maxsize(width=965, height=500)
+        parent.minsize(width=859, height=522)
+        parent.maxsize(width=859, height=522)
 
-
-#-------------------------------------Exit Button----------------------------------------------------------------
-#Function for the exit button
-    def on_quit(self):
-        quit()
 
 #--------------------------------------------------------------VIBER DATABSASE ANALYSIS-------------------------------------------------------------
 #Adapted from Stackoverflow.com by Parfait
@@ -114,7 +109,8 @@ class Analysis(ttk.Frame):
         import tkinter.filedialog as filedialog
         from tkinter.filedialog import asksaveasfilename
         self.root.title('Word List Creator')
-        self.textEdit = st.ScrolledText(root, width=118, height=30.5)
+        top=self.top=Toplevel(root)
+        self.textEdit = st.ScrolledText(top, width=118, height=30.5)
         self.textEdit.grid(column=0, row=0)
         self.grid(column=0, row=0, sticky='nsew')
 
@@ -151,11 +147,10 @@ class Analysis(ttk.Frame):
         messagebox.showinfo("Success", "Chat log directory successfully loaded")
     def chatanal(self):
         out = filedialog.asksaveasfile(mode='w', defaultextension=".txt", filetypes=[("Text files","*.txt"), ("All Files","*.*")])
-        csvname = out
-        import fnmatch
+        csvname = out #check if needed.
+        import fnmatch #check
         import os
         import sys
-        import csv
         path = self.chatopen
         files = os.listdir(path)
         paths = []
@@ -178,7 +173,7 @@ class Analysis(ttk.Frame):
                             out.write(line)
                             if not found:
                                 print("not here")
-                                messagebox.showinfo("Success", "Viber Database successfully analysed")
+        messagebox.showinfo("Success", "Viber Database successfully analysed")
 
 #----------------------------------------------------------------GUI Grid and Buttons-----------------------------------------------------------------------
 
@@ -186,50 +181,91 @@ class Analysis(ttk.Frame):
         #GUI Building and Grid options.
         self.root.title('Grooming Analysis')
 
-        #Makes it so the user cannot move the menu bar
-        #self.root.option_add('*tearOFF', 'FALSE')
-
-        #Menubar at the top of the program
-        self.menubar = tkinter.Menu(self.root)
-        self.menu_file = tkinter.Menu(self.menubar)
-#        self.menubar.add_cascade(menu=self.menu_file, label='File')
-#        self.menu_file.add_command(label='Exit', command=self.on_quit)
-#        self.root.config(menu=self.menubar)
-
         #Instructions
         frame = Frame(self, borderwidth=1, relief="solid")
         frame.pack(side=TOP)
         labeltext = StringVar()
-        #labeltext.set("")
         labeltext.set("This is a python program to enable a user to analyse a Viber database and run language analysis on the chats within. \n\nCreated by Nathan Preen for my Final Year Project at Leeds Beckett University. \n\nWithin the directory of this program there is a log folder, this contains logs of all of the actions you have undertaken. The program will also create 3 other folders within the directory, these will contain HTML, CSV and text files of the information obtained from analysis\n\nThe buttons below are as followed.\n\n Insert Viber Database: This will open a file dialog for the user to select the viber database.\n\n Viber Database Analyse:  This will run the analysis script and output the viber chats into the root folder of the script. The chat logs will be named automatically based on the conversation id's from the database. The user will also be given a HTML and Text format. \n\n Create Word List: This will open an inbuilt text editor to allow the user to create their own words list. This will not automatically direct the program to the word list, the user must set the word list using the insert words list button. \n\n Insert Words List: This button will allow the user to insert their precreated word list (These must be in .txt format). \n\n Insert Chat Logs: This button will ask the user to point the program to the directory where all of the chat logs are stored.\n\n Analyse Chat log: This button will run the analysis based on the files passed to the program by the user. The user MUST have inserted a word list and chat log directory to work.")
         self.label = Label(frame, textvariable=labeltext, width=120, height=30, wraplength=600)
-        self.label.grid(column=0, row=1, columnspan=6, rowspan=4, pady=5, padx=5)
+        self.label.grid(column=0, row=0, columnspan=6, rowspan=4, pady=5, padx=5)
 
         #Viber Message Extraction buttons
-        bframe = Frame(self, borderwidth=1, relief="solid", bg="red")
+        bframe = Frame(self, borderwidth=1, relief="solid")
         bframe.pack(side=RIGHT)
 
         self.viber_button = ttk.Button(bframe, width=25, text='Insert Viber Database', command=self.viber)
-        self.viber_button.grid(column=1, row=0,sticky='N')
+        self.viber_button.grid(column=2, row=0,sticky='N')
         self.viberanal_button = ttk.Button(bframe, width=25, text='Viber Database Analyse', command=self.viber_db)
-        self.viberanal_button.grid(column=2, row=0,sticky='N')
+        self.viberanal_button.grid(column=2, row=1,sticky='N')
 
         #Word list Button
         self.words_button = ttk.Button(bframe, width=25, text='Insert Words List', command=self.wordop)
-        self.words_button.grid(column=4, row=0,sticky='N')
-        self.words_button = ttk.Button(bframe, width=25, text='Create Word List', command=self.init_te)
         self.words_button.grid(column=3, row=0,sticky='N')
+        self.words_button = ttk.Button(bframe, width=25, text='Create Word List', command=self.init_te)
+        self.words_button.grid(column=3, row=1,sticky='N')
 
         #Chat log button
         self.chatlog_button = ttk.Button(bframe, width=25, text='Insert Chat log Directory', command=self.clopen)
         self.chatlog_button.grid(column=5, row=0)
-        self.chatlog_button = ttk.Button(bframe, width=25, text='Analyse Chat Log', command=self.chatanal)
+        self.chatlog_button = ttk.Button(bframe, width=25, text='Analyse Chat Logs', command=self.case_stuff)
         self.chatlog_button.grid(column=6, row=0)
 
-
+        #Case Details
+        self.casedetails_button = ttk.Button(bframe, width=25, text='Insert Case Details', command=self.case_stuff)
+        self.casedetails_button.grid(column=1, row=0)
 
         #Grid Options
         self.grid()
+#----------------------------------------------------------------Case Entry----------------------------------------------------------------------------
+
+
+    def case_stuff(self):
+        top=self.top=Toplevel(root)
+        #top.attributes("-topmost", True)
+        self.casetitle=Label(top,text="Please enter your case details")
+        self.casetitle.grid(column=1, row=1)
+
+        self.namelabel=Label(top,text="Please enter your Case Name")
+        self.namelabel.grid(column=1, row=2)
+        self.name=Entry(top)
+        self.name.grid(column=2, row=2)
+
+        self.invname=Label(top, text="Please enter your name")
+        self.invname.grid(column=1, row=3)
+        self.invesname=Entry(top)
+        self.invesname.grid(column=2, row=3)
+
+        self.caselabel=Label(top, text="Please enter your case number")
+        self.caselabel.grid(column=1, row=4)
+        self.casenumber=Entry(top)
+        self.casenumber.grid(column=2, row=4)
+
+        self.orglabel=Label(top, text="Please enter your organization")
+        self.orglabel.grid(column=1, row=5)
+        self.orgentry=Entry(top)
+        self.orgentry.grid(column=2, row=5)
+
+        self.contactlabel=Label(top, text="Please enter your contact information")
+        self.contactlabel.grid(column=1, row=6)
+        self.contactinfo=Entry(top)
+        self.contactinfo.grid(column=2, row=6)
+
+        self.b=Button(top,text='Ok', command=self.caseclose)
+        self.b.grid(column=1, row=7)
+
+
+    def caseclose(self):
+        self.namevalue=self.name.get()
+        self.invvalue=self.invesname.get()
+        self.casevalue=self.casenumber.get()
+        self.orgvalue=self.orgentry.get()
+        self.contactvalue=self.contactinfo.get()
+        self.top.destroy()
+        logging.info("Case Name: " + self.namevalue)
+        logging.info("Investigator Name: " + self.invvalue)
+        logging.info("The organization: " + self.orgvalue)
+        logging.info("Contact Details: " + self.contactvalue)
+
 
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------

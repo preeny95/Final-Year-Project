@@ -1,0 +1,142 @@
+Library imports{
+tkinter
+tkinter.filedialog
+tkinter.messagebox
+date time
+os
+}
+
+If NOT os.path exists
+{
+os.makdirs (Logs, TextLogs, HTMLLogs, CSVLogs)
+}
+
+CREATE log variable = Log location.format(datetime)
+logging configuration (filename, add message with date)
+
+GUI Class 'Analysis'
+{
+gui initialize
+root = parent
+mixsize
+maxsize
+}
+#--------------------------------------------------------------VIBER DATABSASE ANALYSIS-------------------------------------------------------------
+
+viber () Choose the viber database
+{
+Import askopenfilename
+askopenfilename dialog box
+log entry, filename + 'success'
+message box on gui
+}
+
+viber_db () SQL statements for viber and file write functions for html, txt and csv
+{
+Import sqlite3, pandas
+CREATE variable conn = sql connection
+CREATE variable curr = sql cursor
+CREATE variable cur = SQL execute to select distinct for conversation_id column for sorting of conversations
+CREATE variable query = SQL query to gather all data from required columns
+
+FOR convo in cur.fetchall
+Open text, html and csv files to save SQL data, names based on conversation_id
+
+HTML write function (df.to.html)
+Txt write function (df.to_string)
+Csv write function (df.to_csv)
+
+curr + conn close
+message box on gui
+log information for database location and amount of conversations
+}
+#------------------------------------------------------------------Text Editor---------------------------------------------------------------------
+
+return_main()
+{
+textedit.forget
+menubar delete
+}
+
+save_feature()
+{
+select file save location
+if file set
+file.write
+file.close
+log information for file saved
+}
+
+init_te () Text editor
+{
+Import libraries Scrolledtext, filedialog, asksaveasfilename
+Gui title
+CREATE variable scroll bar
+CREATE grid for text editor
+
+Function to keep nav bar in same place
+Nav bar functions (Save and Quit)
+}
+#----------------------------------------------------------------Word list-----------------------------------------------------------------------
+
+wordop() Allows user to select the word list
+{
+askopenfile name file dialog to chose the file
+message box for gui
+log info showing which file has been loaded
+}
+
+#----------------------------------------------------------------Chat Logs-----------------------------------------------------------------------
+
+clopen () Select the directory where the chat logs are
+{
+CREATE variable for chatlog directory
+log information stating which directory has been chosen
+message box for GUI
+}
+
+chatanal() Analysis for the chat logs
+{
+CREATE variable prompting user for location to save analysis
+Import libraries fnmatch, os, sys
+CREATE variable for chat directory location
+CREATE array for paths
+CREATE variable for word list
+OPEN word list file
+Set all characters to lowercase in wordlist
+FOR file in files
+    append.path(path to file)
+    IF file matches .txt extension
+    log information stating file name analysed
+    WITH open the chat logs
+      read the file line by line and print
+      FOR lines
+      Make lines in chatlog lowercase
+      IF any lines in word list match chat logs
+      print the lines and write to the log files
+      IF NOT files found
+      print not here
+  Message box for GUI
+}
+
+init_gui () Initialises the GUI and sets the options
+{
+Set gui title
+
+Frame options for the label instructions
+CREATE variable for text frame
+Pack frame to top
+CREATE variable to set the text as a string
+CREATE variable to contain the text
+CREATE variable for button frame
+Pack button frame to right
+CREATE Tkinter Button for Insert Viber Database with grid options
+CREATE Tkinter Button for Viber Database Analyse with grid options
+CREATE Tkinter Button for Insert Words List with grid options
+CREATE Tkinter Button for Create Word List with grid options
+CREATE Tkinter Button for Insert Chat Log Directory with grid options
+CREATE Tkinter Button for Analyse Chat Logs with grid options
+CREATE Tkinter Button for Insert Viber Database with grid options
+}
+IF __name__ == '__main__':
+Loop for to draw the GUI
