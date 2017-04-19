@@ -32,8 +32,8 @@ class Analysis(ttk.Frame):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
         self.root = parent
         self.init_gui()
-        parent.minsize(width=859, height=522)
-        parent.maxsize(width=859, height=522)
+        parent.minsize(width=859, height=550)
+        parent.maxsize(width=859, height=550)
 
 
 #--------------------------------------------------------------VIBER DATABSASE ANALYSIS-------------------------------------------------------------
@@ -108,22 +108,23 @@ class Analysis(ttk.Frame):
         import tkinter.scrolledtext as st
         import tkinter.filedialog as filedialog
         from tkinter.filedialog import asksaveasfilename
-        self.root.title('Word List Creator')
         top=self.top=Toplevel(root)
+        self.menubar = tkinter.Menu(self.top)
         self.textEdit = st.ScrolledText(top, width=118, height=30.5)
         self.textEdit.grid(column=0, row=0)
         self.grid(column=0, row=0, sticky='nsew')
+        self.savebutton = ttk.Button(top, width=25, text='Save', command=self.save_feature)
+        self.savebutton.grid(column=0, row=4)        #Makes it so the user cannot move the menu bar
 
-        #Makes it so the user cannot move the menu bar
         self.root.option_add('*tearOFF', 'FALSE')
 
         #Menubar at the top of the program
-        self.menubar = tkinter.Menu(self.root)
-        self.menu_file = tkinter.Menu(self.menubar)
-        self.menu_file.add_command(label='Save', command=self.save_feature)
-        self.menu_file.add_command(label='Exit', command=self.return_main)
-        self.menubar.add_cascade(menu=self.menu_file, label='File')
-        self.root.config(menu=self.menubar)
+        #self.menubar = tkinter.Menu(self.top)
+    #    self.menu_file = tkinter.Menu(self.menubar)
+    #    self.menu_file.add_command(label='Save', command=self.save_feature)
+    #    self.menu_file.add_command(label='Exit', command=self.return_main)
+    #    self.menubar.add_cascade(menu=self.menu_file, label='File')
+    #    self.root.config(menu=self.menubar)
         self.grid()
 
 
@@ -185,8 +186,8 @@ class Analysis(ttk.Frame):
         frame = Frame(self, borderwidth=1, relief="solid")
         frame.pack(side=TOP)
         labeltext = StringVar()
-        labeltext.set("This is a python program to enable a user to analyse a Viber database and run language analysis on the chats within. \n\nCreated by Nathan Preen for my Final Year Project at Leeds Beckett University. \n\nWithin the directory of this program there is a log folder, this contains logs of all of the actions you have undertaken. The program will also create 3 other folders within the directory, these will contain HTML, CSV and text files of the information obtained from analysis\n\nThe buttons below are as followed.\n\n Insert Viber Database: This will open a file dialog for the user to select the viber database.\n\n Viber Database Analyse:  This will run the analysis script and output the viber chats into the root folder of the script. The chat logs will be named automatically based on the conversation id's from the database. The user will also be given a HTML and Text format. \n\n Create Word List: This will open an inbuilt text editor to allow the user to create their own words list. This will not automatically direct the program to the word list, the user must set the word list using the insert words list button. \n\n Insert Words List: This button will allow the user to insert their precreated word list (These must be in .txt format). \n\n Insert Chat Logs: This button will ask the user to point the program to the directory where all of the chat logs are stored.\n\n Analyse Chat log: This button will run the analysis based on the files passed to the program by the user. The user MUST have inserted a word list and chat log directory to work.")
-        self.label = Label(frame, textvariable=labeltext, width=120, height=30, wraplength=600)
+        labeltext.set("This is a python program to enable a user to analyse a Viber database and run language analysis on the chats within. \n\nCreated by Nathan Preen for my Final Year Project at Leeds Beckett University. \n\nWithin the directory of this program there is a log folder, this contains logs of all of the actions you have undertaken. The program will also create 3 other folders within the directory, these will contain HTML, CSV and text files of the information obtained from analysis\n\nThe buttons below are as followed.\n\n Insert Case Details: This button allows the user to insert specific details about the investigation, such as Case Name and Investigator name\n\n  Insert Viber Database: This will open a file dialog for the user to select the viber database.\n\n Viber Database Analyse:  This will run the analysis script and output the viber chats into the root folder of the script. The chat logs will be named automatically based on the conversation id's from the database. The user will also be given a HTML and Text format. \n\n Create Word List: This will open an inbuilt text editor to allow the user to create their own words list. This will not automatically direct the program to the word list, the user must set the word list using the insert words list button. \n\n Insert Words List: This button will allow the user to insert their precreated word list (These must be in .txt format). \n\n Insert Chat Logs: This button will ask the user to point the program to the directory where all of the chat logs are stored.\n\n Analyse Chat log: This button will run the analysis based on the files passed to the program by the user. The user MUST have inserted a word list and chat log directory to work.")
+        self.label = Label(frame, textvariable=labeltext, width=120, height=32, wraplength=600)
         self.label.grid(column=0, row=0, columnspan=6, rowspan=4, pady=5, padx=5)
 
         #Viber Message Extraction buttons
@@ -211,7 +212,7 @@ class Analysis(ttk.Frame):
         self.chatlog_button.grid(column=6, row=0)
 
         #Case Details
-        self.casedetails_button = ttk.Button(bframe, width=25, text='Insert Case Details', command=self.case_stuff)
+        self.casedetails_button = ttk.Button(bframe, width=25, text='Insert Case Details', command=self.chatanal)
         self.casedetails_button.grid(column=1, row=0)
 
         #Grid Options
