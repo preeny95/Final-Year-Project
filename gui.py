@@ -1,4 +1,4 @@
-import tkinter
+import tkinter as tkinter
 from tkinter import ttk
 from tkinter import *
 import tkinter.filedialog as filedialog
@@ -26,7 +26,7 @@ class Analysis(ttk.Frame):
         self.root = parent
         self.init_gui()
         parent.minsize(width=859, height=550)
-        parent.maxsize(width=859, height=550)
+        parent.maxsize(width=2000, height=2000)
 #--------------------------------------------------------------VIBER DATABSASE ANALYSIS-------------------------------------------------------------
 #Adapted from Stackoverflow.com by Parfait
     def viber(self):
